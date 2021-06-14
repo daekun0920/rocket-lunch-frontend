@@ -1,6 +1,6 @@
 # Rocket Lunch - Frontend
 
-Rocket Lunch is lunch-sharing service to meet with locals and socialize around the world.
+Rocket Lunch is a lunch-sharing platform to meet with locals and socialize around the world.
 
 ## Contributing
 
