@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Home = ({ isAuthorized, setIsAuthorized }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isAuthorized, setIsAuthorized] = useState(false);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -17,15 +16,19 @@ const Home = () => {
       }),
     })
       .then((result) => {
-        if (result.status === 200) {
-          localStorage.setItem("isAuthorized", true);
-          setIsAuthorized(true);
+        if (result.status === 200 || result.status === 202) {
+          localStorage.setItem("isAuthorized", !isAuthorized);
+          setIsAuthorized(!isAuthorized);
+          return result.json();
         } else {
           alert("Wrong Email or Password.");
         }
       })
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("Id", data.id);
+      })
       .catch((error) => {
-        alert("Wrong Email or Password.");
         console.log(error);
       });
   };
@@ -85,12 +88,12 @@ const Home = () => {
               >
                 Sign In
               </button>
-              <button
+              <Link
+                to="/signup"
                 className="bg-white border-blue-500 border hover:bg-gray-200 text-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
               >
-                <Link to="/signup">Sign Up</Link>
-              </button>
+                Sign Up
+              </Link>
             </div>
           </form>
         </div>
@@ -100,8 +103,9 @@ const Home = () => {
             className="bg-red-400 hover:bg-red-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
+              localStorage.removeItem("Id");
               localStorage.removeItem("isAuthorized");
-              setIsAuthorized(false);
+              setIsAuthorized(!isAuthorized);
             }}
           >
             Logout

@@ -6,7 +6,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const signUp = (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
 
     if (
@@ -19,7 +19,7 @@ const Signup = () => {
       return;
     }
 
-    fetch("http://localhost:8080/api/v1/rocket-lunch/signup", {
+    await fetch("http://localhost:8080/api/v1/rocket-lunch/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -28,10 +28,12 @@ const Signup = () => {
       }),
     })
       .then((res) => {
-        if (res.status === 200) {
-          alert("Sign Up Succesful.");
+        if (res.status === 200 || res.status === 202) {
+          alert("Signup Succesful.");
           console.log(res);
           document.getElementById("toHome").click();
+        } else {
+          alert(res.status, " : ", res.statusText);
         }
       })
       .catch((error) => {

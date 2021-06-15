@@ -4,15 +4,27 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Search from "./components/Search";
+import React, { useState } from "react";
 import Signup from "./components/Signup";
 
 function App() {
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
   return (
     <>
-      <Header />
+      <Header isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized} />
       <div>
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <Home
+                isAuthorized={isAuthorized}
+                setIsAuthorized={setIsAuthorized}
+              />
+            )}
+          />
           <Route path="/search" exact component={Search} />
           <Route path="/signup" exact component={Signup} />
         </Switch>
