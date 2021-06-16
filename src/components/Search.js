@@ -5,6 +5,7 @@ const Search = () => {
   const [posts, setPosts] = useState([]);
   const [food, setFood] = useState("");
   const [city, setCity] = useState("");
+  const [time, setTime] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const getPosts = () => {
@@ -14,13 +15,12 @@ const Search = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setPosts(data);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    return () => {};
   };
 
   const addPost = () => {
@@ -29,7 +29,8 @@ const Search = () => {
     const params = {
       food: food,
       city: city,
-      user_id: localStorage.getItem("Id"),
+      user: { id: localStorage.getItem("Id") },
+      time: time,
     };
 
     fetch("http://localhost:8080/api/v1/rocket-lunch/addpost", {
@@ -42,7 +43,6 @@ const Search = () => {
         console.log(data);
         console.log(posts.concat(params));
 
-        setPosts(posts.concat(params));
         getPosts();
       })
       .catch((err) => {
@@ -84,7 +84,16 @@ const Search = () => {
       <div>
         <div className="h-full w-screen flex flex-col justify-start items-center">
           {posts.map((val, idx) => {
-            return <SearchItem key={idx} city={val.city} food={val.food} />;
+            return (
+              <SearchItem
+                key={val.id}
+                city={val.city}
+                food={val.food}
+                username={val.user.username}
+                user_id={val.user.id}
+                time={val.time}
+              />
+            );
           })}
         </div>
       </div>
@@ -146,6 +155,22 @@ const Search = () => {
                         <p className="text-red-500 text-xs italic hidden">
                           Please choose a password.
                         </p>
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          className="block text-gray-700 text-sm font-bold mb-2"
+                          htmlFor="time"
+                        >
+                          Date / Time
+                        </label>
+                        <input
+                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          id="time"
+                          type="datetime-local"
+                          onChange={(e) => {
+                            setTime(e.target.value);
+                          }}
+                        />
                       </div>
                     </form>
                   </div>

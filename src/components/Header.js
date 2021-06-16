@@ -19,7 +19,7 @@ const Header = ({ isAuthorized, setIsAuthorized }) => {
         </Link>
         {isAuthorized !== false ? (
           <>
-            <Link className="p-4" to="/search">
+            <Link className="p-4" to="/profile">
               Profile
             </Link>
             <Link className="p-4" to="/message">

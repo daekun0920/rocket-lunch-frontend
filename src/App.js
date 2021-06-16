@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Search from "./components/Search";
 import React, { useState } from "react";
 import Signup from "./components/Signup";
+import Profile from "./components/Profile";
 
 function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -27,6 +28,7 @@ function App() {
           />
           <Route path="/search" exact component={Search} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/profile" exact component={Profile} />
         </Switch>
       </div>
       <Footer />
