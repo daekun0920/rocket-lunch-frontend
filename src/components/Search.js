@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SearchItem from "./SearchItem";
 
 const Search = () => {
@@ -6,10 +6,11 @@ const Search = () => {
   const [food, setFood] = useState("");
   const [city, setCity] = useState("");
   const [time, setTime] = useState("");
+  const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const getPosts = () => {
-    fetch("http://localhost:8080/api/v1/rocket-lunch/posts", {
+  const getPosts = useCallback(() => {
+    fetch("http://localhost:8080/api/v1/rocket-lunch/posts?city=" + search, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -21,7 +22,7 @@ const Search = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [search]);
 
   const addPost = () => {
     setShowModal(false);
@@ -52,7 +53,7 @@ const Search = () => {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [getPosts]);
 
   return (
     <div className="h-full bg-gray-100 ">
@@ -64,9 +65,15 @@ const Search = () => {
               id="search"
               type="text"
               placeholder="Search"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
             />
             <div className="p-4">
-              <button className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center">
+              <button
+                onClick={getPosts}
+                className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
+              >
                 <i className="fa fa-search"></i>
               </button>
             </div>

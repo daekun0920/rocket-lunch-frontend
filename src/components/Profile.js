@@ -6,6 +6,35 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
+  const changeInfo = (e) => {
+    e.preventDefault();
+
+    if (username === null || username === "") {
+      alert("Please fill out the form");
+    } else if (password !== passwordConfirm) {
+      alert("Please fill out the form");
+    } else if (password === "" || passwordConfirm === "") {
+      alert("Please fill out the form");
+    } else {
+      fetch("http://localhost:8080/api/v1/rocket-lunch/user-update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: localStorage.getItem("Id"),
+          username: username,
+          password: password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <div>
       <div className="flex h-full justify-center items-start pt-7 bg-gray-50">
@@ -71,7 +100,9 @@ const Profile = () => {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline"
               type="submit"
-              onClick={(e) => {}}
+              onClick={(e) => {
+                changeInfo(e);
+              }}
             >
               Change
             </button>
