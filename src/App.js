@@ -7,6 +7,7 @@ import Search from "./components/Search";
 import React, { useState } from "react";
 import Signup from "./components/Signup";
 import Profile from "./components/Profile";
+import Message from "./components/Message";
 
 function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -29,6 +30,7 @@ function App() {
           <Route path="/search" exact component={Search} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/profile" exact component={Profile} />
+          <Route path="/message" exact component={Message} />
         </Switch>
       </div>
       <Footer />

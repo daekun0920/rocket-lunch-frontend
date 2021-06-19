@@ -28,6 +28,7 @@ const Profile = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          alert("Successfully Changed.");
         })
         .catch((err) => {
           console.log(err);
