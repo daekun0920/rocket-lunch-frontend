@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Search from "./components/Search";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Signup from "./components/Signup";
 import Profile from "./components/Profile";
 import Message from "./components/Message";
@@ -12,6 +12,11 @@ import Message from "./components/Message";
 function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("Id") !== null) {
+      setIsAuthorized(true);
+    }
+  }, []);
   return (
     <>
       <Header isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized} />

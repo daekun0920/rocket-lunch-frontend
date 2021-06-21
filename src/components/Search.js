@@ -93,7 +93,7 @@ const Search = () => {
           {posts.map((val, idx) => {
             return (
               <SearchItem
-                key={val.idx}
+                key={idx}
                 post_id={val.id}
                 city={val.city}
                 food={val.food}
