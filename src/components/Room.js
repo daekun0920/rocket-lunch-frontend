@@ -2,7 +2,7 @@ import React from "react";
 
 const Room = ({ room }) => {
   return (
-    <div className="flex justify-between m-5 w-11/12 h-20 bg-white border-gray-400 ml-5 shadow-xl rounded-md rounded-t-xl font-mono p-2">
+    <div className="flex justify-between m-5 w-11/12 h-20 bg-white border-gray-400 ml-5 shadow-xl rounded-md rounded-t-xl font-mono p-2 cursor-pointer">
       <div>
         <div className="border-b-1">{room.post.user.username}</div>
         <div className="border-b-1">{room.post.food}</div>
